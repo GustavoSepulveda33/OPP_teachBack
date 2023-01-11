@@ -1,19 +1,4 @@
 // OOP PRESENTATION: 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 // OOP or Object Oriented Programming is a programming paradigm that uses objects and 
 //      all the actions (or methods) and properties that act on said objects to build applications. 
 //      The paradigm builds on the idea of having a collection of interacting objects to build apps. 
@@ -33,25 +18,23 @@ var __extends = (this && this.__extends) || (function () {
 //      the functions operate strictly with the information used in the Employee Class, it makes sense to group those inside the class itself.
 //      With just the lone class, one could get away with defining them outside the class, however, if this class were to belong to a large company with possibly
 //      hundreds of employees, having these methods nestled inside the class maximizes re-usability as they can apply the methods directly to each new Employee Class. 
-// class Employee {
-//     private _wage: number;
-//     private _clearance: number;
-//     public _employeeRole: string;
-//     constructor(wage: number, employeeRole: string, clearance: number) {
-//         this._wage = wage;
-//         this._employeeRole = employeeRole;
-//         this._clearance = clearance;
-//     }
-//     public setClearance(level: number) {
-//         this._clearance = level;
-//     }
-//     public getRole(): string {
-//         return this._employeeRole;
-//     }
-//     public setWage(wage: number): void {
-//         this._wage = wage;
-//     }
-// }
+var Employee = /** @class */ (function () {
+    function Employee(wage, employeeRole, clearance) {
+        this._wage = wage;
+        this._employeeRole = employeeRole;
+        this._clearance = clearance;
+    }
+    Employee.prototype.setClearance = function (level) {
+        this._clearance = level;
+    };
+    Employee.prototype.getRole = function () {
+        return this._employeeRole;
+    };
+    Employee.prototype.setWage = function (wage) {
+        this._wage = wage;
+    };
+    return Employee;
+}());
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // ABSTRACTION & INHERITANCE
 // ABSTRACTION: 
@@ -68,7 +51,7 @@ var __extends = (this && this.__extends) || (function () {
 // In the example below we see an instance of INHERITANCE on line 99 and line 106 where the Employee Class is inheriting the method "getRole()" from the abstract class "EmployeeRole" 
 //      through the "extends" keyword and the super() call. 
 // abstract class EmployeeRole {
-//     constructor(private role: string) { }
+//     constructor(protected role: string) { }
 //     abstract getRole(): string;
 // }
 // class Employee extends EmployeeRole {
@@ -106,7 +89,7 @@ var __extends = (this && this.__extends) || (function () {
 // As you can observe, the "setClearance()" method declared on line 168 and is then overloaded twice in lines 169 and 170. The first overload accepts type number
 //      and the second accepts type string. Depending on the arguments passed to the method later on, the program will know which of the methods declared to execute. 
 // abstract class EmployeeRole {
-//     constructor(private role: string) { }
+//     constructor(protected role: string) { }
 //     abstract getRole(): string;
 // }
 // class Employee extends EmployeeRole {
@@ -139,53 +122,45 @@ var __extends = (this && this.__extends) || (function () {
 // As you can observe, we have created a new class called "Manager" that extends the "Employee" Class and overrides the "getRole()" method from the parent or super class. 
 //      By doing this, we can now create instances of both classes and store them together and the developer can now call the "getRole()" methdo on each element without having
 //      to worry about the types of said elements. 
-var EmployeeRole = /** @class */ (function () {
-    function EmployeeRole(role) {
-        this.role = role;
-    }
-    return EmployeeRole;
-}());
-var Employee = /** @class */ (function (_super) {
-    __extends(Employee, _super);
-    function Employee(wage, employeeRole, clearance) {
-        var _this = _super.call(this, employeeRole) || this;
-        _this._wage = wage;
-        _this._clearance = clearance;
-        return _this;
-    }
-    Employee.prototype.getRole = function () {
-        return this.role;
-    };
-    Employee.prototype.setClearance = function (level, password) {
-        if (typeof level === "number") {
-            this._clearance = level;
-        }
-        else {
-            if (password === "secret") {
-                this._clearance = Number(level);
-            }
-        }
-    };
-    Employee.prototype.setWage = function (wage) {
-        this._wage = wage;
-    };
-    return Employee;
-}(EmployeeRole));
-var Manager = /** @class */ (function (_super) {
-    __extends(Manager, _super);
-    function Manager() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Manager.prototype.getRole = function () {
-        return "Manager - ".concat(this.role);
-    };
-    return Manager;
-}(Employee));
-var employees = [
-    new Employee(1500, "Developer", 2),
-    new Manager(2000, "QA", 1)
-];
-for (var _i = 0, employees_1 = employees; _i < employees_1.length; _i++) {
-    var employee = employees_1[_i];
-    console.log(employee.getRole());
-}
+// abstract class EmployeeRole {
+//     constructor(protected role: string) { }
+//     abstract getRole(): string;
+// }
+// class Employee extends EmployeeRole {
+//     private _wage: number;
+//     private _clearance: number;
+//     constructor(wage: number, employeeRole: string, clearance: number) {
+//         super(employeeRole);
+//         this._wage = wage;
+//         this._clearance = clearance;
+//     }
+//     public getRole(): string {
+//         return this.role;
+//     }
+//     public setClearance(level: number): void;
+//     public setClearance(level: string, password: string): void;
+//     public setClearance(level: number | string, password?: string): void {
+//         if (typeof level === "number") {
+//             this._clearance = level;
+//         } else {
+//             if (password === "secret") {
+//                 this._clearance = Number(level);
+//             }
+//         }
+//     }
+//     public setWage(wage: number): void {
+//         this._wage = wage;
+//     }
+// }
+// class Manager extends Employee {
+//     public getRole(): string {
+//         return `Manager - ${this.role}`;
+//     }
+// }
+// const employees: EmployeeRole[] = [
+//     new Employee(1500, "Developer", 2),
+//     new Manager(2000, "QA", 1)
+// ];
+// for (const employee of employees) {
+//     console.log(employee.getRole());
+// }

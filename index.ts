@@ -98,7 +98,7 @@
 
 
 // abstract class EmployeeRole {
-//     constructor(private role: string) { }
+//     constructor(protected role: string) { }
 //     abstract getRole(): string;
 // }
 
@@ -156,7 +156,7 @@
 
 
 // abstract class EmployeeRole {
-//     constructor(private role: string) { }
+//     constructor(protected role: string) { }
 //     abstract getRole(): string;
 // }
 
@@ -198,57 +198,57 @@
 //      to worry about the types of said elements. 
 
 
-abstract class EmployeeRole {
-    constructor(protected role: string) { }
-    abstract getRole(): string;
-}
+// abstract class EmployeeRole {
+//     constructor(protected role: string) { }
+//     abstract getRole(): string;
+// }
 
-class Employee extends EmployeeRole {
-    private _wage: number;
-    private _clearance: number;
-    constructor(wage: number, employeeRole: string, clearance: number) {
-        super(employeeRole);
-        this._wage = wage;
-        this._clearance = clearance;
-    }
-    public getRole(): string {
-        return this.role;
-    }
-    public setClearance(level: number): void;
-    public setClearance(level: string, password: string): void;
+// class Employee extends EmployeeRole {
+//     private _wage: number;
+//     private _clearance: number;
+//     constructor(wage: number, employeeRole: string, clearance: number) {
+//         super(employeeRole);
+//         this._wage = wage;
+//         this._clearance = clearance;
+//     }
+//     public getRole(): string {
+//         return this.role;
+//     }
+//     public setClearance(level: number): void;
+//     public setClearance(level: string, password: string): void;
 
-    public setClearance(level: number | string, password?: string): void {
+//     public setClearance(level: number | string, password?: string): void {
 
-        if (typeof level === "number") {
-            this._clearance = level;
-        } else {
-            if (password === "secret") {
-                this._clearance = Number(level);
-            }
-        }
-    }
+//         if (typeof level === "number") {
+//             this._clearance = level;
+//         } else {
+//             if (password === "secret") {
+//                 this._clearance = Number(level);
+//             }
+//         }
+//     }
 
-    public setWage(wage: number): void {
-        this._wage = wage;
-    }
-}
-
-
-class Manager extends Employee {
-    public getRole(): string {
-        return `Manager - ${this.role}`;
-    }
-}
+//     public setWage(wage: number): void {
+//         this._wage = wage;
+//     }
+// }
 
 
-const employees: EmployeeRole[] = [
-    new Employee(1500, "Developer", 2),
-    new Manager(2000, "QA", 1)
-];
+// class Manager extends Employee {
+//     public getRole(): string {
+//         return `Manager - ${this.role}`;
+//     }
+// }
 
 
-for (const employee of employees) {
-    console.log(employee.getRole());
-}
+// const employees: EmployeeRole[] = [
+//     new Employee(1500, "Developer", 2),
+//     new Manager(2000, "QA", 1)
+// ];
+
+
+// for (const employee of employees) {
+//     console.log(employee.getRole());
+// }
 
 
