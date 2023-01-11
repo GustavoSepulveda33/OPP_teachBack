@@ -23,16 +23,19 @@
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 
 // ENCAPSULATION: 
-//      In OOP, we group related properties and methods that operate on the same same set of variables in a group called "objects".
+//      In OOP, we group related properties and methods that operate on the same same set of variables in a group called "objects" later we can define who has access to these properties
+//          or methods using modifiers (protected, public, private). 
+
+//      Private modifiers - can ONLY be accessed by methods or properties of the same class. 
+//      Protected modifies - can be accessed by methods or properties of the same class AND its subclasses. 
+//      Public modifiers - can be accessed by any code. 
+
+
 //      This practice helps reduce complexity and increase re-usability across the entire application. 
 //      This pillar allows us to create both private and public properties or methods. 
 
 // In the Employee Class below, we see an example of ENCAPSULATION as we can observe how the class holds a set of both private and public properties
-//      as well as a set of Methods or functions that all make reference to things that are directly liked to the Employee Class. For example, in theory, 
-//      one could define the functions "setWage" or "get Clearance" outside of the class and call the variables from the constructor to use them, but since
-//      the functions operate strictly with the information used in the Employee Class, it makes sense to group those inside the class itself.
-//      With just the lone class, one could get away with defining them outside the class, however, if this class were to belong to a large company with possibly
-//      hundreds of employees, having these methods nestled inside the class maximizes re-usability as they can apply the methods directly to each new Employee Class. 
+//      as well as a set of Methods or functions that all make reference to things that are directly liked to the Employee Class.
 
 
 
@@ -93,7 +96,7 @@
 //      In OOP, INHERITANCE is a concept that allows classes to "inherit" or extend properties and methods from another class. When a class inherits from another
 //      it is referred to as a "derived class" and the class that is inherited from is known as the "super class". 
 
-// In the example below we see an instance of INHERITANCE on line 99 and line 106 where the Employee Class is inheriting the method "getRole()" from the abstract class "EmployeeRole" 
+// In the example below we see an instance of INHERITANCE on line 108 and line 115 where the Employee Class is inheriting the method "getRole()" from the abstract class "EmployeeRole" 
 //      through the "extends" keyword and the super() call. 
 
 
@@ -145,13 +148,13 @@
 // RUNTIME POLYMORPHISM: 
 //      Also known as "overriding", this concept is apparent when a derived class changes the implementation of a function or method that was passed in from 
 //      the parent or super class. 
-//      The correct method to use is determined when at runtime based on the type of the object. 
+//      The correct method to use is determined at runtime based on the type of the object. 
 
 
 
 // Here we set an example of Compile-Time Polymorphism: 
 
-// As you can observe, the "setClearance()" method declared on line 168 and is then overloaded twice in lines 169 and 170. The first overload accepts type number
+// As you can observe, the "setClearance()" method declared on line 174 and is then overloaded twice in lines 169 and 170. The first overload accepts type number
 //      and the second accepts type string. Depending on the arguments passed to the method later on, the program will know which of the methods declared to execute. 
 
 
@@ -171,18 +174,25 @@
 //     public getRole(): string {
 //         return this.role;
 //     }
-//     public setClearance(level: number): void;
-//     public setClearance(level: string, password: string): void;
 
-//     public setClearance(level: number | string, password?: string): void {
+//     public setClearance(level: number): void;
+//     public setClearance(level: string): void;
+
+
+
+//     public setClearance(level: number | string): void {
 
 //         if (typeof level === "number") {
 //             this._clearance = level;
 //         } else {
-//             if (password === "secret") {
-//                 this._clearance = Number(level);
-//             }
+//             this._clearance = Number(level);
 //         }
+//     }
+
+//     public getClearance(): number {
+
+//         return this._clearance
+
 //     }
 
 //     public setWage(wage: number): void {
@@ -191,10 +201,24 @@
 // }
 
 
+// // Here we can observe how this overloading is happening in real time:
+// const example = new Employee(1000, "Janitor", 3)
+
+// console.log("Original clearance level:", example.getClearance());
+
+// example.setClearance(5);
+// console.log("Clearance after setClearance(5): ", example.getClearance());
+
+// example.setClearance("10");
+// console.log(`Clearance after setClearance("10"):`, example.getClearance());
+
+
+
+
 // Here is an example of Runtime Polymorphism: 
 
 // As you can observe, we have created a new class called "Manager" that extends the "Employee" Class and overrides the "getRole()" method from the parent or super class. 
-//      By doing this, we can now create instances of both classes and store them together and the developer can now call the "getRole()" methdo on each element without having
+//      By doing this, we can now create instances of both classes and store them together and the user can now call the "getRole()" method on each element without having
 //      to worry about the types of said elements. 
 
 
@@ -214,18 +238,25 @@
 //     public getRole(): string {
 //         return this.role;
 //     }
-//     public setClearance(level: number): void;
-//     public setClearance(level: string, password: string): void;
 
-//     public setClearance(level: number | string, password?: string): void {
+//     public setClearance(level: number): void;
+//     public setClearance(level: string): void;
+
+
+
+//     public setClearance(level: number | string): void {
 
 //         if (typeof level === "number") {
 //             this._clearance = level;
 //         } else {
-//             if (password === "secret") {
-//                 this._clearance = Number(level);
-//             }
+//             this._clearance = Number(level);
 //         }
+//     }
+
+//     public getClearance(): number {
+
+//         return this._clearance
+
 //     }
 
 //     public setWage(wage: number): void {
