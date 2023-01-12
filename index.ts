@@ -84,6 +84,8 @@
 // ABSTRACTION: 
 //      Abstraction is a programming method that shows only the essential attributes or properties and hides any unnecessary information
 //      with the purpose of exposing only on the most important aspects of a program to a user. 
+
+//      Abstract classes are meant to be subclassed. 
 //      This practice helps reduce complexity and isolate impact of changes on the Class as well as creating a more modular and maintainable
 //      code. 
 
@@ -92,11 +94,13 @@
 //      that can be implemented to any subclass after its declaration. This way, "EmployeeRole" can be applied to a wide range of classes, in our example,
 //      this can be applied to any employee in this company, while the Employee Class perse, can implement said abstract class to specific employees. 
 
+
+
 // INHERITANCE: 
 //      In OOP, INHERITANCE is a concept that allows classes to "inherit" or extend properties and methods from another class. When a class inherits from another
 //      it is referred to as a "derived class" and the class that is inherited from is known as the "super class". 
 
-// In the example below we see an instance of INHERITANCE on line 108 and line 115 where the Employee Class is inheriting the method "getRole()" from the abstract class "EmployeeRole" 
+// In the example below we see an instance of INHERITANCE on line 112 and line 119 where the Employee Class is inheriting the method "getRole()" from the abstract class "EmployeeRole" 
 //      through the "extends" keyword and the super() call. 
 
 
@@ -158,59 +162,59 @@
 //      and the second accepts type string. Depending on the arguments passed to the method later on, the program will know which of the methods declared to execute. 
 
 
-// abstract class EmployeeRole {
-//     constructor(protected role: string) { }
-//     abstract getRole(): string;
-// }
+abstract class EmployeeRole {
+    constructor(protected role: string) { }
+    abstract getRole(): string;
+}
 
-// class Employee extends EmployeeRole {
-//     private _wage: number;
-//     private _clearance: number;
-//     constructor(wage: number, employeeRole: string, clearance: number) {
-//         super(employeeRole);
-//         this._wage = wage;
-//         this._clearance = clearance;
-//     }
-//     public getRole(): string {
-//         return this.role;
-//     }
+class Employee extends EmployeeRole {
+    private _wage: number;
+    private _clearance: number;
+    constructor(wage: number, employeeRole: string, clearance: number) {
+        super(employeeRole);
+        this._wage = wage;
+        this._clearance = clearance;
+    }
+    public getRole(): string {
+        return this.role;
+    }
 
-//     public setClearance(level: number): void;
-//     public setClearance(level: string): void;
-
-
-
-//     public setClearance(level: number | string): void {
-
-//         if (typeof level === "number") {
-//             this._clearance = level;
-//         } else {
-//             this._clearance = Number(level);
-//         }
-//     }
-
-//     public getClearance(): number {
-
-//         return this._clearance
-
-//     }
-
-//     public setWage(wage: number): void {
-//         this._wage = wage;
-//     }
-// }
+    public setClearance(level: number): void;
+    public setClearance(level: string): void;
 
 
-// // Here we can observe how this overloading is happening in real time:
-// const example = new Employee(1000, "Janitor", 3)
 
-// console.log("Original clearance level:", example.getClearance());
+    public setClearance(level: number | string): void {
 
-// example.setClearance(5);
-// console.log("Clearance after setClearance(5): ", example.getClearance());
+        if (typeof level === "number") {
+            this._clearance = level;
+        } else {
+            this._clearance = Number(level);
+        }
+    }
 
-// example.setClearance("10");
-// console.log(`Clearance after setClearance("10"):`, example.getClearance());
+    public getClearance(): number {
+
+        return this._clearance
+
+    }
+
+    public setWage(wage: number): void {
+        this._wage = wage;
+    }
+}
+
+
+// Here we can observe how this overloading is happening in real time:
+const example = new Employee(1000, "Janitor", 3)
+
+console.log("Original clearance level:", example.getClearance());
+
+example.setClearance(5);
+console.log("Clearance after setClearance(5): ", example.getClearance());
+
+example.setClearance("10");
+console.log(`Clearance after setClearance("10"):`, example.getClearance());
 
 
 

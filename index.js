@@ -57,6 +57,7 @@ var __extends = (this && this.__extends) || (function () {
 // ABSTRACTION: 
 //      Abstraction is a programming method that shows only the essential attributes or properties and hides any unnecessary information
 //      with the purpose of exposing only on the most important aspects of a program to a user. 
+//      Abstract classes are meant to be subclassed. 
 //      This practice helps reduce complexity and isolate impact of changes on the Class as well as creating a more modular and maintainable
 //      code. 
 // In the example below we expand on the Employee Class example I showed before. This time around, we add an abstract method called EmployeeRole
@@ -65,7 +66,7 @@ var __extends = (this && this.__extends) || (function () {
 // INHERITANCE: 
 //      In OOP, INHERITANCE is a concept that allows classes to "inherit" or extend properties and methods from another class. When a class inherits from another
 //      it is referred to as a "derived class" and the class that is inherited from is known as the "super class". 
-// In the example below we see an instance of INHERITANCE on line 108 and line 115 where the Employee Class is inheriting the method "getRole()" from the abstract class "EmployeeRole" 
+// In the example below we see an instance of INHERITANCE on line 112 and line 119 where the Employee Class is inheriting the method "getRole()" from the abstract class "EmployeeRole" 
 //      through the "extends" keyword and the super() call. 
 // abstract class EmployeeRole {
 //     constructor(protected role: string) { }
@@ -105,48 +106,6 @@ var __extends = (this && this.__extends) || (function () {
 // Here we set an example of Compile-Time Polymorphism: 
 // As you can observe, the "setClearance()" method declared on line 174 and is then overloaded twice in lines 169 and 170. The first overload accepts type number
 //      and the second accepts type string. Depending on the arguments passed to the method later on, the program will know which of the methods declared to execute. 
-// abstract class EmployeeRole {
-//     constructor(protected role: string) { }
-//     abstract getRole(): string;
-// }
-// class Employee extends EmployeeRole {
-//     private _wage: number;
-//     private _clearance: number;
-//     constructor(wage: number, employeeRole: string, clearance: number) {
-//         super(employeeRole);
-//         this._wage = wage;
-//         this._clearance = clearance;
-//     }
-//     public getRole(): string {
-//         return this.role;
-//     }
-//     public setClearance(level: number): void;
-//     public setClearance(level: string): void;
-//     public setClearance(level: number | string): void {
-//         if (typeof level === "number") {
-//             this._clearance = level;
-//         } else {
-//             this._clearance = Number(level);
-//         }
-//     }
-//     public getClearance(): number {
-//         return this._clearance
-//     }
-//     public setWage(wage: number): void {
-//         this._wage = wage;
-//     }
-// }
-// // Here we can observe how this overloading is happening in real time:
-// const example = new Employee(1000, "Janitor", 3)
-// console.log("Original clearance level:", example.getClearance());
-// example.setClearance(5);
-// console.log("Clearance after setClearance(5): ", example.getClearance());
-// example.setClearance("10");
-// console.log(`Clearance after setClearance("10"):`, example.getClearance());
-// Here is an example of Runtime Polymorphism: 
-// As you can observe, we have created a new class called "Manager" that extends the "Employee" Class and overrides the "getRole()" method from the parent or super class. 
-//      By doing this, we can now create instances of both classes and store them together and the user can now call the "getRole()" method on each element without having
-//      to worry about the types of said elements. 
 var EmployeeRole = /** @class */ (function () {
     function EmployeeRole(role) {
         this.role = role;
@@ -180,21 +139,57 @@ var Employee = /** @class */ (function (_super) {
     };
     return Employee;
 }(EmployeeRole));
-var Manager = /** @class */ (function (_super) {
-    __extends(Manager, _super);
-    function Manager() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Manager.prototype.getRole = function () {
-        return "Manager - ".concat(this.role);
-    };
-    return Manager;
-}(Employee));
-var employees = [
-    new Employee(1500, "Developer", 2),
-    new Manager(2000, "QA", 1)
-];
-for (var _i = 0, employees_1 = employees; _i < employees_1.length; _i++) {
-    var employee = employees_1[_i];
-    console.log(employee.getRole());
-}
+// Here we can observe how this overloading is happening in real time:
+var example = new Employee(1000, "Janitor", 3);
+console.log("Original clearance level:", example.getClearance());
+example.setClearance(5);
+console.log("Clearance after setClearance(5): ", example.getClearance());
+example.setClearance("10");
+console.log("Clearance after setClearance(\"10\"):", example.getClearance());
+// Here is an example of Runtime Polymorphism: 
+// As you can observe, we have created a new class called "Manager" that extends the "Employee" Class and overrides the "getRole()" method from the parent or super class. 
+//      By doing this, we can now create instances of both classes and store them together and the user can now call the "getRole()" method on each element without having
+//      to worry about the types of said elements. 
+// abstract class EmployeeRole {
+//     constructor(protected role: string) { }
+//     abstract getRole(): string;
+// }
+// class Employee extends EmployeeRole {
+//     private _wage: number;
+//     private _clearance: number;
+//     constructor(wage: number, employeeRole: string, clearance: number) {
+//         super(employeeRole);
+//         this._wage = wage;
+//         this._clearance = clearance;
+//     }
+//     public getRole(): string {
+//         return this.role;
+//     }
+//     public setClearance(level: number): void;
+//     public setClearance(level: string): void;
+//     public setClearance(level: number | string): void {
+//         if (typeof level === "number") {
+//             this._clearance = level;
+//         } else {
+//             this._clearance = Number(level);
+//         }
+//     }
+//     public getClearance(): number {
+//         return this._clearance
+//     }
+//     public setWage(wage: number): void {
+//         this._wage = wage;
+//     }
+// }
+// class Manager extends Employee {
+//     public getRole(): string {
+//         return `Manager - ${this.role}`;
+//     }
+// }
+// const employees: EmployeeRole[] = [
+//     new Employee(1500, "Developer", 2),
+//     new Manager(2000, "QA", 1)
+// ];
+// for (const employee of employees) {
+//     console.log(employee.getRole());
+// }
